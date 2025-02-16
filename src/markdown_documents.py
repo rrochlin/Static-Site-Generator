@@ -1,9 +1,17 @@
+import re
 from typing import List
 
 from htmlnode import ParentNode
 from inline_markdown import markdown_to_blocks, text_to_textnodes
 from markdown_blocks import BlockType, block_to_block_type
 from textnode import text_node_to_html_node
+
+
+def extract_tile(markdown: str) -> str:
+    match = re.match(r"^# (.*)", markdown)
+    if not match:
+        raise Exception("document did not begin with a h1")
+    return match.group(1)
 
 
 def markdown_to_html_node(markdown: str) -> ParentNode:
